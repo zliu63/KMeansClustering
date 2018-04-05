@@ -14,7 +14,7 @@ the centers.
 '''
 #import dataset
 myMap = {"Iris-setosa":0,"Iris-versicolor":1,"Iris-virginica":2}
-filename = "/Users/ziyangliu/Documents/CS446/KMeansClustering/data/iris.data"
+filename = "./data/iris.data"
 lines = [line.rstrip('\n').split(",") for line in open(filename,"r")] 
 lines.pop(0)
 data = np.array(lines)
@@ -45,10 +45,10 @@ def k_means(C):
         (break ties arbitrarily).
     '''
     pred = np.zeros(N)
-    K = C.shape[0]
-    D = C.shape[1]
+    C_curr = np.array(C)
+    K = C_curr.shape[0]
+    D = C_curr.shape[1]
     C_next = np.zeros((K,D))
-    C_curr = C
     for i in range(N):
         pred[i] = choose(X[i],C_curr)
     for k in range(K):
