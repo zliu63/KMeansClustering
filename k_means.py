@@ -37,6 +37,11 @@ def choose(x,C_curr):
     dist = np.sum(dist,axis = 1)
     return np.argmin(dist)
 
+def distance(C_old,C_new):
+    ret = np.sum(np.sqrt(np.sum(np.square(C_new-C_old),axis = 1)),axis = 0)
+    return ret
+    
+
 def k_means(C):
     '''
     Repeat until convergence:
@@ -53,12 +58,12 @@ def k_means(C):
         pred[i] = choose(X[i],C_curr)
     for k in range(K):
         C_next[k] = np.mean(X[pred==k],axis = 0)
-    while not np.array_equal(C_next,C_curr):
+    while distance(C_curr, C_next) > 0.01:
         C_curr = deepcopy(C_next)
         for i in range(N):
             pred[i] = choose(X[i],C_curr)
         for k in range(K):
-            C_next[k] = np.mean(X[pred==k],axis = 0)            
+            C_next[k] = np.mean(X[pred==k],axis = 0)
     return C_next
 
 
